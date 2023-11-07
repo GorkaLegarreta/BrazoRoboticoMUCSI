@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def detectar_contornos_colores(image): 
+def detectar_contornos_fichas(image): 
     # Definir los rangos de color para cada color
     lower_blue = np.array([90, 50, 50])
     upper_blue = np.array([130, 255, 255])

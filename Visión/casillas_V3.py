@@ -4,11 +4,11 @@ import dimensionesTablero_V3
 import contornosFichas_V3
 
 # Cargar la imagen
-image = cv2.imread('Imagenes/tablero9.png')
+image = cv2.imread('Imagenes/tablero8.png')
 
 # Detectar la dimensión del tablero y los contornos de las fichas
 dimensionesTablero = dimensionesTablero_V3.encontrar_esquinas_casillas(image)
-contornosFichas = contornosFichas_V3.detectar_contornos_colores(image)
+contornosFichas = contornosFichas_V3.detectar_contornos_fichas(image)
 
 # Calcular las dimensiones de las casillas
 esquinas_tablero = dimensionesTablero[0]  # Accedemos a la única tupla en la lista
@@ -39,14 +39,17 @@ for fila in range(3):
         x2 = x1 + ancho_casilla
         y2 = y1 + alto_casilla
 
-        # Margen de tolerancia para considerar que un contorno está dentro de una casilla
-        margen = 5 # Ajusta este valor según tus necesidades
+        # Margen fijo en función del tamaño de la casilla
+        margen_x = ancho_casilla // 10  # Ajusta este valor según tus necesidades
+        margen_y = alto_casilla // 10  # Ajusta este valor según tus necesidades
 
-        # Verificar si algún contorno está dentro de la casilla
+        # Verificar si algún contorno está dentro de la casilla o dentro del margen
         for contorno in contornosFichas:
-            for punto in contorno:
-                x, y = punto[0]
-                if x1 - margen <= x <= x2 + margen and y1 - margen <= y <= y2 + margen:
+            momentos = cv2.moments(contorno)
+            if momentos["m00"] != 0:
+                x = int(momentos["m10"] / momentos["m00"])
+                y = int(momentos["m01"] / momentos["m00"])
+                if x1 - margen_x <= x <= x2 + margen_x and y1 - margen_y <= y <= y2 + margen_y:
                     tablero[fila, columna] = True
                     break  # Puedes detener la búsqueda si se encuentra un contorno en la casilla
 

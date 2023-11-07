@@ -40,9 +40,9 @@ def detectar_contornos_colores(image):
     return contours_blue, contours_red, contours_green, contours_yellow
 
 # Ejemplo de uso:
-"""
+
 # Ejemplo de uso con una imagen
-image = cv2.imread('Imagenes/tablero1.png')  # Reemplaza 'tu_imagen.png' con la ruta de tu imagen
+image = cv2.imread('Imagenes/tablero0.png')  # Reemplaza 'tu_imagen.png' con la ruta de tu imagen
 contornos_azules, contornos_rojos, contornos_verdes, contornos_amarillos = detectar_contornos_colores(image)
 
 # Dibujar los contornos en la imagen original y mostrarla
@@ -64,4 +64,3 @@ cv2.drawContours(image_contornos, contornos_amarillos, -1, (0, 0, 0), 2)
 cv2.imshow('Imagen con Contornos', image_contornos)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-"""

@@ -4,7 +4,7 @@ import dimensionesTablero_V3
 import contornosFichas_por_colores
 
 # Cargar la imagen
-image = cv2.imread('Imagenes/tablero6.png')
+image = cv2.imread('Imagenes/tablero0.png')
 
 # Detectar la dimensión del tablero y los contornos de las fichas
 dimensionesTablero = dimensionesTablero_V3.encontrar_esquinas_casillas(image)
@@ -28,17 +28,7 @@ ancho_casilla = (x_max - x_min) // 3
 alto_casilla = (y_max - y_min) // 3
 
 # Crear una matriz para representar el tablero con información sobre si está ocupada
-tablero = np.zeros((3, 3), dtype=bool)
-
-# Relacionar los colores con los jugadores
-colores_jugadores = {
-    (0, 0, 255): 1,  # Rojo
-    (255, 0, 0): 2,  # Azul
-    (0, 255, 0): 3,  # Verde
-    (0, 255, 255): 4  # Amarillo
-}
-
-contours = contours_blue + contours_red + contours_green + contours_yellow
+tablero = np.zeros((3, 3), dtype=int)
 
 # Recorrer cada casilla del tablero
 for fila in range(3):
@@ -54,33 +44,25 @@ for fila in range(3):
         margen_y = alto_casilla // 10  # Ajusta este valor según tus necesidades
 
         # Verificar si algún contorno está dentro de la casilla o dentro del margen
-        # Variables para almacenar el color dominante en cada casilla
-        color_dominante = 0
-
-        for contorno in contours:
+        for contorno in contours_red:
             momentos = cv2.moments(contorno)
             if momentos["m00"] != 0:
                 x = int(momentos["m10"] / momentos["m00"])
                 y = int(momentos["m01"] / momentos["m00"])
                 if x1 - margen_x <= x <= x2 + margen_x and y1 - margen_y <= y <= y2 + margen_y:
-                    # Obtener el color dominante del contorno
-                    if contorno in contours_red:
-                        color_dominante = 1  # Jugador 1 (Rojo)
-                        tablero[fila][columna] = color_dominante
-                        break
-                    elif contorno in contours_blue:
-                        color_dominante = 2  # Jugador 2 (Azul)
-                        tablero[fila][columna] = color_dominante
-                        break
-                    elif contorno in contours_green:
-                        color_dominante = 3  # Jugador 3 (Verde)
-                        tablero[fila][columna] = color_dominante
-                        break
-                    elif contorno in contours_yellow:
-                        color_dominante = 4  # Jugador 4 (Amarillo)
-                        tablero[fila][columna] = color_dominante
-                        break
-        
+                    tablero[fila, columna] = 1 # Jugador 1 (Rojo)
+                    break  # Puedes detener la búsqueda si se encuentra un contorno en la casilla
+
+        for contorno in contours_blue:
+            momentos = cv2.moments(contorno)
+            if momentos["m00"] != 0:
+                x = int(momentos["m10"] / momentos["m00"])
+                y = int(momentos["m01"] / momentos["m00"])
+                if x1 - margen_x <= x <= x2 + margen_x and y1 - margen_y <= y <= y2 + margen_y:
+                    tablero[fila, columna] = 2  # Jugador 2 (Azul)
+                    break  # Puedes detener la búsqueda si se encuentra un contorno en la casilla
 
 # En este punto, la matriz 'tablero' contiene información sobre si cada casilla está ocupada o no.
+
 print(tablero)
+

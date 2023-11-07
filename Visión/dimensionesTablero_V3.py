@@ -32,6 +32,25 @@ def encontrar_esquinas_casillas(image):
         esquina_superior_derecha = (x + w, y)
         esquina_inferior_izquierda = (x, y + h)
         esquina_inferior_derecha = (x + w, y + h)
+        """
+        si por ejemplo mi tablero estuviese girado o con un poco torcido, se podría hacer un enderezado ?
+
+        # Obtener las coordenadas de las esquinas del tablero en la imagen original
+        esquinas_originales = encontrar_esquinas_casillas(image)
+
+        # Definir las coordenadas de las esquinas en la imagen rectificada
+        # Ajusta estas coordenadas según tu necesidad
+        esquina_superior_izquierda_rect = (0, 0)
+        esquina_superior_derecha_rect = (ancho_tablero_rectificado, 0)
+        esquina_inferior_izquierda_rect = (0, alto_tablero_rectificado)
+        esquina_inferior_derecha_rect = (ancho_tablero_rectificado, alto_tablero_rectificado)
+
+        # Calcular la matriz de transformación
+        matriz_transformacion = cv2.getPerspectiveTransform(np.array(esquinas_originales, dtype=np.float32), np.array([esquina_superior_izquierda_rect, esquina_superior_derecha_rect, esquina_inferior_izquierda_rect, esquina_inferior_derecha_rect], dtype=np.float32))
+
+        # Aplicar la transformación para enderezar el tablero
+        imagen_rectificada = cv2.warpPerspective(image, matriz_transformacion, (ancho_tablero_rectificado, alto_tablero_rectificado))
+        """
         
         # Agregar las coordenadas de las esquinas a la lista
         esquinas_casillas.append((esquina_superior_izquierda, esquina_superior_derecha, esquina_inferior_izquierda, esquina_inferior_derecha))

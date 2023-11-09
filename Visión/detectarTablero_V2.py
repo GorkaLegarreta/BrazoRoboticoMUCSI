@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Cargar una imagen o capturar desde la cámara
-image = cv2.imread('Imagenes/tablero10.png')  # O cambia a captura de cámara con cv2.VideoCapture
+image = cv2.imread('Imagenes/tablero11.png')  # O cambia a captura de cámara con cv2.VideoCapture
 def encontrar_esquinas_tablero(image):
     # Convertir la imagen a escala de grises
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

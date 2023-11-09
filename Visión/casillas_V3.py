@@ -4,7 +4,7 @@ import dimensionesTablero_V3
 import contornosFichas_V3
 
 # Cargar la imagen
-image = cv2.imread('Imagenes/tablero8.png')
+image = cv2.imread('Imagenes/tablero0.png')
 
 # Detectar la dimensión del tablero y los contornos de las fichas
 dimensionesTablero = dimensionesTablero_V3.encontrar_esquinas_casillas(image)

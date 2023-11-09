@@ -1,13 +1,13 @@
 import cv2
 import numpy as np
-import dimensionesTablero_V3
+import detectarTablero_V2
 import contornosFichas_por_colores
 
 # Cargar la imagen
-image = cv2.imread('Imagenes/tablero8.png')
+image = cv2.imread('Imagenes/tablero11.png')
 
 # Detectar la dimensión del tablero y los contornos de las fichas
-dimensionesTablero = dimensionesTablero_V3.encontrar_esquinas_casillas(image)
+dimensionesTablero = detectarTablero_V2.encontrar_esquinas_tablero(image)
 contours_blue, contours_red, contours_green, contours_yellow = contornosFichas_por_colores.detectar_contornos_colores(image)
 
 # Calcular las dimensiones de las casillas

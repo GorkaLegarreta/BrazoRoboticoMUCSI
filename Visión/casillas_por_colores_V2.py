@@ -4,7 +4,7 @@ import detectarTablero_V2
 import contornosFichas_por_colores
 
 # Cargar la imagen
-image = cv2.imread('Imagenes/tablero11.png')
+image = cv2.imread('Imagenes/gorka_1.png')
 
 # Detectar la dimensión del tablero y los contornos de las fichas
 dimensionesTablero = detectarTablero_V2.encontrar_esquinas_tablero(image)

@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 
 # Cargar una imagen o capturar desde la cámara
-image = cv2.imread('Imagenes/tablero3.png')  # O cambia a captura de cámara con cv2.VideoCapture
+image = cv2.imread('Imagenes/gorka_1.png')  # O cambia a captura de cámara con cv2.VideoCapture
 
 # Definir los rangos de color para cada color
 lower_blue = np.array([90, 50, 50])

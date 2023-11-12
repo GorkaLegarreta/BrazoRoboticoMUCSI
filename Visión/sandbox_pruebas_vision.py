@@ -42,10 +42,6 @@ if fichas_rojas is not None:
 estado = vt.obtener_estado_tablero(image)
 print(estado)
 
-#obtiene el estado real del tablero como una secuencia de ceros, unos y doses
-estado_descodificado = vt.base3(estado)
-print(estado_descodificado)
-
 cv2.imshow('Sandbox de Pruebas de Vision', image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

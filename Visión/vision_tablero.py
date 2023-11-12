@@ -77,39 +77,20 @@ def obtener_ficha_libre(fichas, rectangulo_tablero):
 # Devuelve un entero que transformado a base 3 representa el estado del tablero
 def obtener_estado_tablero(imagen) -> int:
     
-    tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    estado = 0
-
     rectangulo_tablero = obtener_rectangulo_tablero(imagen)
     rectangulos_casillas = obtener_rectangulos_casillas(rectangulo_tablero)
-
     mascara_azul, mascara_rojo = obtener_mascaras_colores(imagen)
-
     fichas_azules = obtener_fichas_color(imagen, mascara_azul)
     fichas_rojas = obtener_fichas_color(imagen, mascara_rojo)
+
+    estado = 0
 
     for i in range(9):
         for j in fichas_azules[0, :]:
             if dentro(j, rectangulos_casillas[i]):
-                tablero[i] = 1
                 estado += 1*(3**i)
         for k in fichas_rojas[0, :]:
             if dentro(k, rectangulos_casillas[i]):
-                tablero[i] = 2
                 estado += 2*(3**i)
                 
     return estado
-
-# Devuelve una cadena de 9 caracteres (0, 1, 2) representando el estado del tablero
-def base3(numero) -> str:
-    resto = ""
-    for i in range(9):
-        if numero != 0:
-            cociente = int(numero / 3)
-            resto += str(numero % 3)
-            numero = cociente
-        else:
-            resto += "0"
-    
-    return resto
-    

@@ -8,6 +8,8 @@ umbral_inferior_rojo1 = np.array([0, 100, 100])
 umbral_superior_rojo1 = np.array([10, 255, 255])
 umbral_inferior_rojo2 = np.array([160, 100, 100])
 umbral_superior_rojo2 = np.array([180, 255, 255])
+lower_yellow = np.array([20, 100, 100])
+upper_yellow = np.array([40, 255, 255])
 
 # Devuelve máscaras para cada color
 def obtener_mascaras_colores(imagen):
@@ -15,7 +17,8 @@ def obtener_mascaras_colores(imagen):
     mascara_azul = cv2.inRange(hsv, umbral_inferior_azul, umbral_superior_azul)
     mascara_rojo1 = cv2.inRange(hsv, umbral_inferior_rojo1, umbral_superior_rojo1)
     mascara_rojo2 = cv2.inRange(hsv, umbral_inferior_rojo2, umbral_superior_rojo2)
-    mascara_rojo = mascara_rojo1 + mascara_rojo2
+    #mascara_rojo = mascara_rojo1 + mascara_rojo2
+    mascara_rojo = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
     return mascara_azul, mascara_rojo
 
@@ -24,7 +27,7 @@ def obtener_fichas_color(imagen, mascara) -> []:
     fichas = cv2.bitwise_and(imagen, imagen, mask = mascara)
     imagen_gris = cv2.cvtColor(fichas, cv2.COLOR_BGR2GRAY)
     imagen_gris = cv2.medianBlur(imagen_gris, 5)
-    fichas = cv2.HoughCircles(imagen_gris, cv2.HOUGH_GRADIENT_ALT, 1, 20, param1=100, param2=0, minRadius=0, maxRadius=0)
+    fichas = cv2.HoughCircles(imagen_gris, cv2.HOUGH_GRADIENT_ALT, 1, 40, param1=100, param2=0, minRadius=0, maxRadius=0)
 
     if fichas is not None:
         fichas = np.uint16(np.around(fichas))
@@ -60,7 +63,8 @@ def obtener_rectangulos_casillas(rectangulo_tablero):
 def dentro(ficha, rectangulo) -> bool:
     centro_ficha_x = ficha[0]
     centro_ficha_y = ficha[1]
-    radio_ficha = ficha[2]-5
+    #radio_ficha = ficha[2]-5
+    radio_ficha = 5
 
     if  rectangulo[0] < (centro_ficha_x-radio_ficha) and (centro_ficha_x+radio_ficha) < (rectangulo[0]+rectangulo[2]) and \
         rectangulo[1] < (centro_ficha_y-radio_ficha) and (centro_ficha_y+radio_ficha) < (rectangulo[1]+rectangulo[3]):
@@ -86,11 +90,14 @@ def obtener_estado_tablero(imagen) -> int:
     estado = 0
 
     for i in range(9):
-        for j in fichas_azules[0, :]:
+        print("i: ", i)
+        for j in fichas_azules[0, :]:            
             if dentro(j, rectangulos_casillas[i]):
+                print("azul", j)
                 estado += 1*(3**i)
-        for k in fichas_rojas[0, :]:
+        for k in fichas_rojas[0, :]:            
             if dentro(k, rectangulos_casillas[i]):
+                print("amarillo: ",k)
                 estado += 2*(3**i)
                 
     return estado

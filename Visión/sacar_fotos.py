@@ -12,7 +12,7 @@ while True:
     key = cv2.waitKey(1) & 0xFF    
     if key == ord('s'): # Si se pulsa 's', guarda la imagen actual
         count += 1
-        image_name = f'Imagenes/gorka_{count}.png'  # Nombre del archivo de imagen
+        image_name = f'Imagenes/javi_{count}.png'  # Nombre del archivo de imagen
         cv2.imwrite(image_name, frame)  # Guarda la imagen en un archivo    
     elif key == ord('q'): # Si se pulsa 'q', sale del bucle        
         cv2.destroyWindow("Camara con filtro")

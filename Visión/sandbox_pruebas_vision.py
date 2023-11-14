@@ -4,8 +4,13 @@ import vision_tablero as vt
 
 # Cargar una imagen o capturar desde la cámara
 image = cv2.imread('Imagenes/tablero.png')  # Cambia la ruta de la imagen según tus necesidades
+
+# Obtiene el estado del tablero codificado en un entero decimal
+estado = vt.obtener_estado_tablero(image)
+print(estado)
+
 rectangulo_tablero = vt.obtener_rectangulo_tablero(image)
-mascara_a, mascara_r = vt.obtener_mascaras_colores(image)
+_, mascara_a, mascara_r = vt.obtener_mascaras_colores(image)
 
 # Bloque que obtiene las fichas azules
 fichas_azules = vt.obtener_fichas_color(image, mascara_a)
@@ -36,11 +41,6 @@ if fichas_rojas is not None:
     # si hay una ficha libre, marca el centro en verde
     if ficha_libre is not None:
         cv2.circle(image, (ficha_libre[0], ficha_libre[1]), 2, (0, 255, 0), 3)
-
-
-# Obtiene el estado del tablero codificado en un entero decimal
-estado = vt.obtener_estado_tablero(image)
-print(estado)
 
 cv2.imshow('Sandbox de Pruebas de Vision', image)
 cv2.waitKey(0)
